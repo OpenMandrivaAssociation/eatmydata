@@ -7,6 +7,7 @@ License:	GPLv3
 URL:		https://launchpad.net/libeatmydata
 Source0:	http://launchpad.net/libeatmydata/trunk/release-26/+download/libeatmydata-26.tar.bz2
 Source1:	eatmydata
+Patch0:		libeatmydata-26-use-correct-libdir.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Provides:	libeatmydata
 
@@ -17,6 +18,7 @@ testing to get faster test runs where real durability is not required.
 
 %prep
 %setup -q -n libeatmydata-%version
+%patch0 -p1
 
 %build
 ./autogen.sh
@@ -26,10 +28,11 @@ testing to get faster test runs where real durability is not required.
 %install
 rm -rf %{buildroot}
 
-%makeinstall_std
+make install LIBDIR=%{_libdir} DESTDIR=%{buildroot}
 
 install -d %{buildroot}/%{_bindir}
 install -m 755 %{_sourcedir}/%{name} %{buildroot}/%{_bindir}/%{name}
+sed -i 's,__LIBDIR__,%{_libdir},g' %{buildroot}/%{_bindir}/%{name}
 
 %clean
 rm -rf %{buildroot}
