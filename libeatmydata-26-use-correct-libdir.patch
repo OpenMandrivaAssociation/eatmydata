@@ -1,0 +1,19 @@
+--- ./Makefile.orig	2011-02-06 00:53:40.000000000 -0200
++++ ./Makefile	2011-02-06 00:54:27.000000000 -0200
+@@ -2,6 +2,8 @@ libs = libeatmydata.so
+ CC ?= gcc
+ PREFIX ?=/usr
+ 
++LIBDIR = $(PREFIX)/lib
++
+ all: $(libs)
+ 
+ clean:
+@@ -60,5 +62,5 @@ runeatmydatatest: eatmydatatest $(libs)
+ 	LD_PRELOAD=./libeatmydata.so ./eatmydatatest
+ 
+ install:
+-	mkdir -p $(DESTDIR)$(PREFIX)/lib
+-	cp -Rf $(libs) $(DESTDIR)$(PREFIX)/lib
++	mkdir -p $(DESTDIR)$(LIBDIR)
++	cp -Rf $(libs) $(DESTDIR)$(LIBDIR)/
