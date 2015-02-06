@@ -1,7 +1,7 @@
 Summary:	A small wrapper to disable fsync and related functions
 Name:		eatmydata
 Version:	65
-Release:	1
+Release:	2
 Group:		File tools
 License:	GPLv3
 URL:		https://launchpad.net/libeatmydata
