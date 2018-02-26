@@ -1,47 +1,36 @@
 Summary:	A small wrapper to disable fsync and related functions
 Name:		eatmydata
-Version:	65
-Release:	2
+Version:	105
+Release:	1
 Group:		File tools
 License:	GPLv3
 URL:		https://launchpad.net/libeatmydata
 Source0:	https://launchpad.net/libeatmydata/trunk/release-%{version}/+download/libeatmydata-%{version}.tar.gz
-Source1:	eatmydata
-Patch0:		libeatmydata-26-use-correct-libdir.patch
-Provides:	libeatmydata
+Patch0:		fix-it.patch
+Provides:	libeatmydata = %{EVRD}
 
-%description 
-LD_PRELOAD library that disables all forms of writing data safely to disk.
-fsync() becomes a NO-OP, O_SYNC is removed etc. The idea is to use in
-testing to get faster test runs where real durability is not required.
+%description
+libeatmydata is a small LD_PRELOAD library designed to (transparently) disable
+fsync (and friends, like open(O_SYNC)). This has two side-effects: making
+software that writes data safely to disk a lot quicker and making this software
+no longer crash safe.
+
+DO NOT use libeatmydata on software where you care about what it stores. It's
+called libEAT-MY-DATA for a reason.
 
 %prep
 %setup -q -n libeatmydata-%{version}
-#patch0 -p1
+%apply_patches
 
 %build
-#./autogen.sh
-%configure2_5x
+%configure
 %make
 
 %install
 %makeinstall_std
- # LIBDIR=%{_libdir} DESTDIR=%{buildroot}
-
-install -d %{buildroot}/%{_bindir}
-install -m 755 %{SOURCE1} %{buildroot}/%{_bindir}/%{name}
-sed -i 's,__LIBDIR__,%{_libdir},g' %{buildroot}/%{_bindir}/%{name}
 
 %files
 %doc AUTHORS ChangeLog README
-%{_bindir}/%{name}
-%{_libdir}/libeatmydata.so*
+%{_bindir}/*
+%{_libdir}/*
 %{_libexecdir}/eatmydata.sh
-
-
-%changelog
-* Sun Feb 06 2011 Bogdano Arendartchuk <bogdano@mandriva.com> 26-1mdv2011.0
-+ Revision: 636355
-- added patch to use correct libdir
-- imported package eatmydata
-
