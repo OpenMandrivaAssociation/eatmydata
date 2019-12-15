@@ -1,13 +1,13 @@
 Summary:	A small wrapper to disable fsync and related functions
 Name:		eatmydata
 Version:	105
-Release:	1
+Release:	2
 Group:		File tools
 License:	GPLv3
 URL:		https://launchpad.net/libeatmydata
 Source0:	https://launchpad.net/libeatmydata/trunk/release-%{version}/+download/libeatmydata-%{version}.tar.gz
 Patch0:		fix-it.patch
-Provides:	libeatmydata = %{EVRD}
+Provides:	libeatmydata = %{version}-%{release}
 
 %description
 libeatmydata is a small LD_PRELOAD library designed to (transparently) disable
@@ -20,17 +20,18 @@ called libEAT-MY-DATA for a reason.
 
 %prep
 %setup -q -n libeatmydata-%{version}
-%apply_patches
+%autopatch -p1
 
 %build
 %configure
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 
 %files
 %doc AUTHORS ChangeLog README
+%license COPYING
 %{_bindir}/*
 %{_libdir}/*
 %{_libexecdir}/eatmydata.sh
