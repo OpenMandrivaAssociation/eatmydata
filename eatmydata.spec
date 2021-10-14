@@ -1,3 +1,5 @@
+%define _disable_rebuild_configure 1
+
 Summary:	A small wrapper to disable fsync and related functions
 Name:		eatmydata
 Version:	105
@@ -19,8 +21,7 @@ DO NOT use libeatmydata on software where you care about what it stores. It's
 called libEAT-MY-DATA for a reason.
 
 %prep
-%setup -q -n libeatmydata-%{version}
-%autopatch -p1
+%autosetup -n libeatmydata-%{version} -p1
 
 %build
 %configure
