@@ -11,6 +11,11 @@ Source0:	https://launchpad.net/libeatmydata/trunk/release-%{version}/+download/l
 Patch0:		fix-it.patch
 Provides:	libeatmydata = %{version}-%{release}
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 %description
 libeatmydata is a small LD_PRELOAD library designed to (transparently) disable
 fsync (and friends, like open(O_SYNC)). This has two side-effects: making
